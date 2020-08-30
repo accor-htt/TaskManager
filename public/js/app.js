@@ -1942,26 +1942,40 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    getTodos: function getTodos() {
+    // Изменение выполнености таска
+    toggleTodo: function toggleTodo(e) {
       var _this = this;
 
-      axios.get('api/todo').then(function (res) {
+      e.completed = !e.completed;
+      var data = new FormData();
+      data.append('_method', 'PATCH');
+      data.append('completed', e.completed ? 1 : 0);
+      axios.post('api/todo' + e.id, data).then(function (res) {
         _this.todos = res.data;
       })["catch"](function (error) {
         console.log(error);
       });
     },
-    saveData: function saveData() {
+    getTodos: function getTodos() {
       var _this2 = this;
+
+      axios.get('api/todo').then(function (res) {
+        _this2.todos = res.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    saveData: function saveData() {
+      var _this3 = this;
 
       var data = new FormData();
       data.append('title', this.form.title);
       axios.post('/api/todo', data).then(function (res) {
-        _this2.form.title = '';
+        _this3.form.title = '';
 
-        _this2.getTodos();
+        _this3.getTodos();
       })["catch"](function (err) {
-        _this2.form.errors.record(err.response.data.errors);
+        _this3.form.errors.record(err.response.data.errors);
       });
     }
   },
@@ -50215,8 +50229,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/html/code/todo/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /var/www/html/code/todo/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /var/www/html/code/TaskManager/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /var/www/html/code/TaskManager/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

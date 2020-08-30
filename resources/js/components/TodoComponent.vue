@@ -34,6 +34,19 @@
         },
         methods: {
 
+            // Изменение выполнености таска
+            toggleTodo(e) {
+                e.completed = !e.completed
+                let data = new FormData()
+                data.append('_method', 'PATCH')
+                data.append('completed', e.completed ? 1 : 0)
+                axios.post('api/todo'+e.id, data).then((res) =>  {
+                    this.todos = res.data;
+                }).catch((error) => {
+                    console.log(error)
+                })
+            },
+
             getTodos() {
                 axios.get('api/todo').then((res) =>  {
                     this.todos = res.data;
