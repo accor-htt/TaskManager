@@ -26,6 +26,7 @@
     export default {
         data(){
             return {
+                editMode: false,
                 todos: '',
                 form: new Form({
                     title: '',
@@ -34,13 +35,22 @@
         },
         methods: {
 
+            deleteTodo(e) {
+                let data = new FormData()
+                data.append('_method', 'DELETE')
+            },
+
+            updateTodo(e) {
+
+            },
+
             // Изменение выполнености таска
             toggleTodo(e) {
                 e.completed = !e.completed
                 let data = new FormData()
                 data.append('_method', 'PATCH')
                 data.append('completed', e.completed ? 1 : 0)
-                axios.post('api/todo'+e.id, data).then((res) =>  {
+                axios.post('api/todo/'+e.id, data).then((res) =>  {
                     this.todos = res.data;
                 }).catch((error) => {
                     console.log(error)

@@ -1935,6 +1935,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      editMode: false,
       todos: '',
       form: new Form({
         title: ''
@@ -1942,6 +1943,11 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    deleteTodo: function deleteTodo(e) {
+      var data = new FormData();
+      data.append('_method', 'DELETE');
+    },
+    updateTodo: function updateTodo(e) {},
     // Изменение выполнености таска
     toggleTodo: function toggleTodo(e) {
       var _this = this;
@@ -1950,7 +1956,7 @@ __webpack_require__.r(__webpack_exports__);
       var data = new FormData();
       data.append('_method', 'PATCH');
       data.append('completed', e.completed ? 1 : 0);
-      axios.post('api/todo' + e.id, data).then(function (res) {
+      axios.post('api/todo/' + e.id, data).then(function (res) {
         _this.todos = res.data;
       })["catch"](function (error) {
         console.log(error);
